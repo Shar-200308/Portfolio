@@ -249,19 +249,20 @@
 .project-badges {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 0.45rem;
+  flex-wrap: nowrap;
 }
 
 .category-badge {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.35rem 0.85rem;
+  letter-spacing: 0.03em;
+  padding: 0.32rem 0.75rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--nav-border);
   color: var(--text-muted);
+  white-space: nowrap;
   transition: all 0.3s ease;
 }
 
@@ -276,12 +277,13 @@
   gap: 0.35rem;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 0.35rem 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 0.32rem 0.75rem;
   border-radius: 999px;
   background: rgba(167, 139, 250, 0.15);
   border: 1px solid rgba(167, 139, 250, 0.35);
   color: #c4b5fd;
+  white-space: nowrap;
 }
 
 /* ===== Card Body ===== */

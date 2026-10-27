@@ -35,9 +35,9 @@ const projectsData = [
   {
     id: 2,
     title: "WALFO",
-    category: "Python Django & Angular",
-    description:"Walfo is a full-stack web application that lets students **securely store, manage, and access academic documents** with **OTP-based email authentication** and **facial recognition** as an additional security layer. Documents are stored on **Cloudinary** and served through a responsive Angular frontend.",
-    technologies: ["Python","Django","Angular","supabase"],
+    category: "Django & Angular",
+    description:"Walfo is a full-stack web application that lets students securely store, manage, and access academic documents with OTP-based email authentication and facial recognition as an additional security layer. Documents are stored on Cloudinary and served through a responsive Angular frontend.",
+    technologies: ["Python", "Django", "Angular", "Supabase", "Cloudinary", "REST API"],
     github: "https://github.com/Mariyajebastin/Walfo-F",
     liveDemo: "#",
     featured: true
