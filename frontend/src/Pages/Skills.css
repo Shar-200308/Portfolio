@@ -1,0 +1,262 @@
+/* ===== Skills Section ===== */
+.skills {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem clamp(1.5rem, 6vw, 5rem);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+/* Ambient radial glow background */
+.skills::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75vw;
+  height: 65vh;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(167, 139, 250, 0.09) 0%,
+    rgba(99, 102, 241, 0.05) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Skills Container ===== */
+.skills-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== Heading Section ===== */
+.skills-heading {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Eyebrow / Subtitle label */
+.skills-heading p,
+.skills-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #a78bfa;
+  margin-bottom: 0.75rem;
+}
+
+.skills-heading p::before,
+.skills-heading p::after,
+.skills-label::before,
+.skills-label::after {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, #a78bfa, #60a5fa);
+  border-radius: 2px;
+}
+
+/* Main Heading Title */
+.skills-heading h2 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--text-color);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.skills-heading h2 span {
+  background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Skills Grid ===== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 960px;
+}
+
+/* ===== Individual Skill Card ===== */
+.skill-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2.2rem 1.25rem 1.8rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s ease,
+              box-shadow 0.35s ease,
+              background-color 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Subtle top glow line on hover */
+.skill-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.8), rgba(96, 165, 250, 0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* Ambient inner spotlight glow on hover */
+.skill-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(167, 139, 250, 0.12) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.skill-item:hover {
+  transform: translateY(-8px);
+  border-color: rgba(167, 139, 250, 0.4);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25),
+              0 0 24px rgba(167, 139, 250, 0.18);
+}
+
+.skill-item:hover::before,
+.skill-item:hover::after {
+  opacity: 1;
+}
+
+/* ===== Devicon Styling ===== */
+.skill-item i {
+  font-size: 3.25rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              filter 0.35s ease;
+}
+
+.skill-item:hover i {
+  transform: scale(1.15) translateY(-3px);
+  filter: drop-shadow(0 8px 18px rgba(167, 139, 250, 0.35));
+}
+
+/* Fallback for uncolored plain icons (e.g., GitHub, Django) */
+.skill-item i.devicon-github-original,
+.skill-item i.devicon-django-plain {
+  color: var(--text-color);
+  transition: color 0.3s ease, transform 0.35s ease, filter 0.35s ease;
+}
+
+.skill-item:hover i.devicon-django-plain {
+  color: #44b78b;
+}
+
+.skill-item:hover i.devicon-github-original {
+  color: #a78bfa;
+}
+
+/* ===== Skill Name Typography ===== */
+.skill-item span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+  letter-spacing: -0.01em;
+  text-align: center;
+  transition: color 0.25s ease;
+}
+
+.skill-item:hover span {
+  color: #ffffff;
+}
+
+
+/* ===== Responsive Breakpoints ===== */
+@media (max-width: 768px) {
+  .skills {
+    padding: 5rem 1.5rem 4rem;
+    min-height: auto;
+  }
+
+  .skills-heading {
+    margin-bottom: 2.5rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1.1rem;
+  }
+
+  .skill-item {
+    padding: 1.75rem 1rem 1.4rem;
+    border-radius: 16px;
+  }
+
+  .skill-item i {
+    font-size: 2.75rem;
+  }
+
+  .skill-item span {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .skill-item {
+    padding: 1.5rem 0.75rem 1.25rem;
+  }
+
+  .skill-item i {
+    font-size: 2.4rem;
+  }
+}

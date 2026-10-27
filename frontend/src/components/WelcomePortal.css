@@ -1,0 +1,309 @@
+/* ===== Fullscreen Welcome Portal Gate ===== */
+.welcome-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #090d16;
+  overflow: hidden;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.welcome-portal.unlocking {
+  opacity: 0;
+  transform: scale(1.08);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* Ambient Radial Glows */
+.welcome-portal-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.welcome-glow-1 {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 50vw;
+  height: 50vh;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, transparent 65%);
+  filter: blur(50px);
+  animation: glowFloat 10s ease-in-out infinite alternate;
+}
+
+.welcome-glow-2 {
+  position: absolute;
+  bottom: 15%;
+  right: 20%;
+  width: 55vw;
+  height: 55vh;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.16) 0%, transparent 65%);
+  filter: blur(60px);
+  animation: glowFloat 12s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glowFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+/* Background Subtle Grid Texture */
+.welcome-portal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Central Portal Card */
+.welcome-card {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2.5rem;
+  max-width: 440px;
+  width: 90%;
+  border-radius: 28px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+              0 0 40px rgba(167, 139, 250, 0.12);
+  animation: cardEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Eyebrow Access Badge */
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c4b5fd;
+  margin-bottom: 2rem;
+}
+
+.welcome-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* Avatar Button Wrapper */
+.welcome-avatar-btn {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 1.75rem;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.welcome-avatar-btn:hover {
+  transform: scale(1.06);
+}
+
+.welcome-avatar-btn:active {
+  transform: scale(0.98);
+}
+
+/* Rotating Gradient Ring */
+.welcome-avatar-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #a78bfa, #60a5fa, #38bdf8, #a78bfa);
+  background-size: 300% 300%;
+  animation: ringGradientRotate 6s ease infinite;
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.5),
+              0 0 50px rgba(96, 165, 250, 0.25);
+  transition: box-shadow 0.4s ease;
+}
+
+.welcome-avatar-btn:hover .welcome-avatar-ring {
+  box-shadow: 0 0 35px rgba(167, 139, 250, 0.8),
+              0 0 70px rgba(96, 165, 250, 0.45);
+}
+
+@keyframes ringGradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* User Photo */
+.welcome-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 3px solid #090d16;
+}
+
+/* Click Overlay Badge on Avatar */
+.welcome-avatar-overlay {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #ffffff;
+}
+
+.welcome-avatar-btn:hover .welcome-avatar-overlay {
+  opacity: 1;
+}
+
+/* Shockwave Ripple Effect */
+.welcome-avatar-ripple {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(167, 139, 250, 0.5);
+  animation: avatarRipple 2.4s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes avatarRipple {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Profile Text */
+.welcome-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.35rem;
+  background: linear-gradient(135deg, #ffffff 20%, #c4b5fd 70%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-role {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin: 0 0 2rem;
+  line-height: 1.5;
+}
+
+/* Enter Portfolio Button */
+.welcome-enter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(99, 102, 241, 0.4);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.25s ease;
+}
+
+.welcome-enter-btn svg {
+  transition: transform 0.25s ease;
+}
+
+.welcome-enter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(99, 102, 241, 0.55);
+}
+
+.welcome-enter-btn:hover svg {
+  transform: translateX(3px);
+}
+
+.welcome-enter-btn:active {
+  transform: translateY(0);
+}
+
+/* Subtle Hint Note */
+.welcome-hint {
+  margin: 1.25rem 0 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .welcome-card {
+    padding: 2.25rem 1.5rem;
+    border-radius: 24px;
+  }
+
+  .welcome-avatar-ring {
+    width: 120px;
+    height: 120px;
+  }
+
+  .welcome-name {
+    font-size: 1.5rem;
+  }
+}
