@@ -40,125 +40,41 @@
   z-index: 1;
 }
 
-/* ===== 3D Profile Photo ===== */
+/* ===== Profile Image Wrapper (handles float animation) ===== */
 .home-img-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 1.25rem 0;
-  perspective: 1000px;
+  animation: floatImage 6s ease-in-out infinite;
 }
 
-.photo-3d-card {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
-  transition: transform 0.15s ease-out;
-  cursor: pointer;
-  animation: float3D 6s ease-in-out infinite;
-}
-
-/* 3D continuous float animation when not tilting */
-@keyframes float3D {
-  0%, 100% {
-    transform: perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px);
-  }
-  25% {
-    transform: perspective(900px) rotateX(3.5deg) rotateY(-3.5deg) translateY(-8px);
-  }
-  50% {
-    transform: perspective(900px) rotateX(-2deg) rotateY(3deg) translateY(-14px);
-  }
-  75% {
-    transform: perspective(900px) rotateX(2.5deg) rotateY(3.5deg) translateY(-6px);
-  }
-}
-
-/* Pause float animation during active mouse tilt */
-.photo-3d-card[style] {
-  animation: none;
-}
-
-/* Rotating Neon Gradient Ring */
-.photo-3d-ring {
-  position: relative;
-  width: clamp(210px, 24vw, 290px);
-  height: clamp(210px, 24vw, 290px);
-  border-radius: 50%;
-  padding: 4px;
-  background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
-  background-size: 300% 300%;
-  animation: ringGradientRotate 6s ease infinite;
-  box-shadow:
-    0 0 25px rgba(56, 189, 248, 0.55),
-    0 0 50px rgba(129, 140, 248, 0.35),
-    0 25px 45px rgba(0, 0, 0, 0.45);
-  transform-style: preserve-3d;
-  transition: box-shadow 0.35s ease, transform 0.35s ease;
-}
-
-.photo-3d-card:hover .photo-3d-ring {
-  box-shadow:
-    0 0 35px rgba(56, 189, 248, 0.8),
-    0 0 70px rgba(129, 140, 248, 0.5),
-    0 30px 60px rgba(0, 0, 0, 0.6);
-}
-
-@keyframes ringGradientRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Circular Photo */
-.home-profile-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
+/* ===== Profile Image (handles hover scale) ===== */
+.home-container img {
+  width: clamp(200px, 24vw, 300px);
+  height: clamp(200px, 24vw, 300px);
   object-fit: cover;
+  border-radius: 50%;
   display: block;
-  border: 3.5px solid #090d16;
-  transform: translateZ(15px);
+  border: 3px solid rgba(167, 139, 250, 0.3);
+  box-shadow:
+    0 0 0 8px rgba(167, 139, 250, 0.06),
+    0 0 60px rgba(99, 102, 241, 0.2),
+    0 30px 60px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* 3D Specular Sheen / Glare */
-.photo-3d-shine {
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 55%);
-  pointer-events: none;
-  transform: translateZ(25px);
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
+.home-container img:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 0 8px rgba(167, 139, 250, 0.1),
+    0 0 80px rgba(99, 102, 241, 0.3),
+    0 40px 70px rgba(0, 0, 0, 0.4);
 }
 
-.photo-3d-card:hover .photo-3d-shine {
-  opacity: 0.9;
-}
-
-/* Shockwave / 3D Pulsing Ripple */
-.photo-3d-ripple {
-  position: absolute;
-  inset: -14px;
-  border-radius: 50%;
-  border: 2px solid rgba(56, 189, 248, 0.55);
-  animation: photoRipple 2.4s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
-  pointer-events: none;
-  transform: translateZ(-10px);
-}
-
-@keyframes photoRipple {
-  0% {
-    transform: scale(0.92);
-    opacity: 0.85;
-  }
-  100% {
-    transform: scale(1.28);
-    opacity: 0;
-  }
+@keyframes floatImage {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }
 
 /* ===== Home Content ===== */
@@ -291,12 +207,12 @@
   .home-container {
     flex-direction: column;
     text-align: center;
-    gap: 2rem;
+    gap: 2.5rem;
   }
 
-  .photo-3d-ring {
-    width: clamp(190px, 50vw, 240px);
-    height: clamp(190px, 50vw, 240px);
+  .home-container img {
+    width: clamp(200px, 55vw, 300px);
+    height: clamp(200px, 55vw, 300px);
   }
 
   .home-content {

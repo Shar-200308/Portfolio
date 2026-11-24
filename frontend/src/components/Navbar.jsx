@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Lock } from "lucide-react";
 import "./Navbar.css";
 
-function Navbar(){
+function Navbar({ onLock }){
     const [menuOpen, setMenuOpen] = useState(false);
 
     const links = [
@@ -34,6 +34,12 @@ function Navbar(){
             </div>
 
             <div className="nav-actions">
+                {onLock && (
+                    <button className="theme-btn" onClick={onLock} title="Lock / Return to Welcome Screen" aria-label="Return to welcome portal">
+                        <Lock size={18}/>
+                    </button>
+                )}
+
                 <button
                     className="menu-btn"
                     onClick={() => setMenuOpen(!menuOpen)}
