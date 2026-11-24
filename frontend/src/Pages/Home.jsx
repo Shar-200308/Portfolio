@@ -9,6 +9,11 @@ function Home(){
                 <div className="home-content">
                     <p className="home-tag">Hello, I'm</p>
                     <h1>Sharan M</h1>
+
+                    <div className="home-img-wrapper">
+                        <img src="/Sharan M.jpeg" alt="Sharan M" />
+                    </div>
+
                     <h2>Full Stack Developer & Software Engineer</h2>
 
                     <div className="home-buttons">
@@ -19,10 +24,6 @@ function Home(){
                             View Resume <Eye size={18}/>
                         </a>
                     </div>
-                </div>
-
-                <div className="home-img-wrapper">
-                    <img src="/Sharan M.jpeg" alt="Sharan M" />
                 </div>
             </div>
         </section>
