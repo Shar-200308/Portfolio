@@ -199,7 +199,7 @@
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
   .home-container {
-    flex-direction: column-reverse;
+    flex-direction: column;
     text-align: center;
     gap: 2.5rem;
   }

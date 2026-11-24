@@ -6,10 +6,6 @@ function Home(){
     return(
         <section id="home" className="home">
             <div className="home-container">
-                <div className="home-img-wrapper">
-                    <img src="/Sharan M.jpeg" alt="Sharan M" />
-                </div>
-
                 <div className="home-content">
                     <p className="home-tag">Hello, I'm</p>
                     <h1>Sharan M</h1>
@@ -23,6 +19,10 @@ function Home(){
                             View Resume <Eye size={18}/>
                         </a>
                     </div>
+                </div>
+
+                <div className="home-img-wrapper">
+                    <img src="/Sharan M.jpeg" alt="Sharan M" />
                 </div>
             </div>
         </section>
