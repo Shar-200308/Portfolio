@@ -1,9 +1,7 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import ScrollToTop from './components/ScrollToTop'
 import PageProgressBar from './components/PageProgressBar'
-import WelcomePortal from './components/WelcomePortal'
 import Home from './Pages/Home'
 import About from './Pages/about'
 import Skills from './Pages/skills'
@@ -31,32 +29,15 @@ function AnimatedRoutes() {
 }
 
 function App() {
-  const [hasEntered, setHasEntered] = useState(() => {
-    return sessionStorage.getItem('portfolio_entered') === 'true';
-  });
-
-  function handleEnter() {
-    sessionStorage.setItem('portfolio_entered', 'true');
-    setHasEntered(true);
-  }
-
-  function handleLock() {
-    sessionStorage.removeItem('portfolio_entered');
-    setHasEntered(false);
-  }
-
   return (
-    <>
-      {!hasEntered && <WelcomePortal onEnter={handleEnter} />}
-      <Router>
-        <ScrollToTop />
-        <Navbar onLock={handleLock} />
-        <PageProgressBar />
-        <main>
-          <AnimatedRoutes />
-        </main>
-      </Router>
-    </>
+    <Router>
+      <ScrollToTop />
+      <Navbar />
+      <PageProgressBar />
+      <main>
+        <AnimatedRoutes />
+      </main>
+    </Router>
   )
 }
 
