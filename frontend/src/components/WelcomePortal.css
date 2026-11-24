@@ -14,11 +14,32 @@
   will-change: opacity, transform, filter;
 }
 
-.welcome-portal.unlocking {
+.welcome-portal.portal-exit {
   opacity: 0;
   transform: scale(1.08);
   filter: blur(10px);
   pointer-events: none;
+}
+
+/* Green Access Granted Burst */
+.welcome-burst-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  width: 60vw;
+  height: 60vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, rgba(56, 189, 248, 0.2) 40%, transparent 70%);
+  opacity: 0;
+  filter: blur(40px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.welcome-burst-glow.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.3);
 }
 
 /* Ambient Radial Glows */
@@ -105,16 +126,31 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.35rem 0.9rem;
+  padding: 0.4rem 1rem;
   border-radius: 999px;
   background: rgba(167, 139, 250, 0.1);
   border: 1px solid rgba(167, 139, 250, 0.25);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #c4b5fd;
   margin-bottom: 2rem;
+  transition: all 0.35s ease;
+}
+
+.welcome-badge.scanning {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.6);
+  color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+}
+
+.welcome-badge.unlocked {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.8);
+  color: #10b981;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
 }
 
 .welcome-badge-dot {
@@ -126,49 +162,102 @@
   animation: pulseDot 2s infinite ease-in-out;
 }
 
+.welcome-badge.scanning .welcome-badge-dot {
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: pulseDot 0.6s infinite ease-in-out;
+}
+
+.welcome-badge.unlocked .welcome-badge-dot {
+  background: #10b981;
+  box-shadow: 0 0 12px #10b981;
+}
+
 @keyframes pulseDot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.4; transform: scale(0.75); }
 }
 
-/* Avatar Button Wrapper */
-.welcome-avatar-btn {
+/* ===== Interactive 3D Face Stage ===== */
+.welcome-3d-stage {
   position: relative;
-  background: none;
-  border: none;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
   cursor: pointer;
   outline: none;
-  margin-bottom: 1.75rem;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  perspective: 900px;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  animation: floatFace3D 6s ease-in-out infinite;
 }
 
-.welcome-avatar-btn:hover {
-  transform: scale(1.06);
+.welcome-3d-stage[style] {
+  animation: none;
 }
 
-.welcome-avatar-btn:active {
-  transform: scale(0.98);
+/* 3D Floating Animation */
+@keyframes floatFace3D {
+  0%, 100% {
+    transform: perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px);
+  }
+  25% {
+    transform: perspective(900px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  }
+  50% {
+    transform: perspective(900px) rotateX(-2deg) rotateY(3deg) translateY(-14px);
+  }
+  75% {
+    transform: perspective(900px) rotateX(3deg) rotateY(4deg) translateY(-6px);
+  }
+}
+
+.welcome-3d-stage.scanning {
+  animation: scanJitter 0.3s ease infinite alternate;
+}
+
+@keyframes scanJitter {
+  0% { transform: scale(1.05) translateZ(20px); }
+  100% { transform: scale(1.07) translateZ(25px); }
+}
+
+.welcome-3d-stage.unlocked {
+  transform: scale(1.12) translateZ(40px) !important;
+  animation: none;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Rotating Gradient Ring */
-.welcome-avatar-ring {
+.face-3d-ring {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 156px;
+  height: 156px;
   border-radius: 50%;
   padding: 4px;
-  background: linear-gradient(135deg, #a78bfa, #60a5fa, #38bdf8, #a78bfa);
+  background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
   background-size: 300% 300%;
-  animation: ringGradientRotate 6s ease infinite;
-  box-shadow: 0 0 25px rgba(167, 139, 250, 0.5),
-              0 0 50px rgba(96, 165, 250, 0.25);
-  transition: box-shadow 0.4s ease;
+  animation: ringGradientRotate 5s linear infinite;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.5),
+              0 0 50px rgba(129, 140, 248, 0.3);
+  transform-style: preserve-3d;
+  transition: box-shadow 0.35s ease;
 }
 
-.welcome-avatar-btn:hover .welcome-avatar-ring {
-  box-shadow: 0 0 35px rgba(167, 139, 250, 0.8),
-              0 0 70px rgba(96, 165, 250, 0.45);
+.welcome-3d-stage:hover .face-3d-ring {
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.8),
+              0 0 70px rgba(129, 140, 248, 0.5);
+}
+
+.welcome-3d-stage.scanning .face-3d-ring {
+  box-shadow: 0 0 45px rgba(56, 189, 248, 1),
+              0 0 85px rgba(129, 140, 248, 0.7);
+}
+
+.welcome-3d-stage.unlocked .face-3d-ring {
+  background: linear-gradient(135deg, #10b981, #34d399, #059669);
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.9),
+              0 0 90px rgba(52, 211, 153, 0.6);
 }
 
 @keyframes ringGradientRotate {
@@ -177,54 +266,240 @@
   100% { background-position: 0% 50%; }
 }
 
-/* User Photo */
-.welcome-avatar-img {
+/* 3D Photo */
+.face-3d-img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  border: 3px solid #090d16;
+  border: 3.5px solid #090d16;
+  transform: translateZ(16px);
+  transition: filter 0.3s ease;
 }
 
-/* Click Overlay Badge on Avatar */
-.welcome-avatar-overlay {
+.welcome-3d-stage.scanning .face-3d-img {
+  filter: contrast(1.1) brightness(1.1);
+}
+
+.welcome-3d-stage.unlocked .face-3d-img {
+  filter: contrast(1.05) brightness(1.15);
+}
+
+/* 3D Biometric Matrix Grid Overlay */
+.face-3d-grid {
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(2px);
+  background-image:
+    radial-gradient(rgba(56, 189, 248, 0.3) 1px, transparent 1px),
+    radial-gradient(rgba(129, 140, 248, 0.2) 1px, transparent 1px);
+  background-size: 14px 14px, 7px 7px;
+  background-position: 0 0, 3.5px 3.5px;
+  opacity: 0.35;
+  pointer-events: none;
+  transform: translateZ(24px);
+  transition: opacity 0.3s ease;
+}
+
+.welcome-3d-stage:hover .face-3d-grid,
+.welcome-3d-stage.scanning .face-3d-grid {
+  opacity: 0.75;
+}
+
+.welcome-3d-stage.unlocked .face-3d-grid {
+  opacity: 0;
+}
+
+/* Sweeping 3D Laser Scan Line */
+.face-3d-laser {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8 30%, #ffffff 50%, #38bdf8 70%, transparent);
+  box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+  pointer-events: none;
+  transform: translateZ(28px);
+  opacity: 0.75;
+  animation: laserScan 2.4s ease-in-out infinite;
+}
+
+.welcome-3d-stage.scanning .face-3d-laser {
+  height: 3px;
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, #10b981 30%, #ffffff 50%, #10b981 70%, transparent);
+  box-shadow: 0 0 14px #10b981, 0 0 25px #10b981;
+  animation: laserScan 0.5s ease-in-out infinite alternate;
+}
+
+.welcome-3d-stage.unlocked .face-3d-laser {
+  opacity: 0;
+}
+
+@keyframes laserScan {
+  0% { top: 6%; opacity: 0.4; }
+  50% { top: 88%; opacity: 1; }
+  100% { top: 6%; opacity: 0.4; }
+}
+
+/* 3D Specular Light Glare */
+.face-3d-shine {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 55%);
+  pointer-events: none;
+  transform: translateZ(32px);
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+.welcome-3d-stage:hover .face-3d-shine {
+  opacity: 0.9;
+}
+
+/* Holographic Biometric Corner Brackets */
+.face-3d-bracket {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(56, 189, 248, 0.65);
+  pointer-events: none;
+  transform: translateZ(36px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.face-3d-bracket.top-left {
+  top: -12px;
+  left: -12px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 6px;
+}
+
+.face-3d-bracket.top-right {
+  top: -12px;
+  right: -12px;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 6px;
+}
+
+.face-3d-bracket.bottom-left {
+  bottom: -12px;
+  left: -12px;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+}
+
+.face-3d-bracket.bottom-right {
+  bottom: -12px;
+  right: -12px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 6px;
+}
+
+.welcome-3d-stage:hover .face-3d-bracket {
+  border-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.7);
+}
+
+.welcome-3d-stage.scanning .face-3d-bracket {
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+  transform: translateZ(40px) scale(0.94);
+}
+
+.welcome-3d-stage.unlocked .face-3d-bracket {
+  border-color: #10b981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.9);
+  transform: translateZ(45px) scale(1.08);
+}
+
+/* Concentric 3D Shockwave Ripples */
+.face-3d-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translateZ(-15px);
+}
+
+.face-3d-ripple-1 {
+  inset: -14px;
+  border: 2px solid rgba(56, 189, 248, 0.45);
+  animation: ripplePulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.face-3d-ripple-2 {
+  inset: -22px;
+  border: 1.5px solid rgba(167, 139, 250, 0.35);
+  animation: ripplePulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite 0.7s;
+}
+
+@keyframes ripplePulse {
+  0% { transform: scale(0.92); opacity: 0.8; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* Status Icon Overlay on Face */
+.face-3d-status-overlay {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: rgba(9, 13, 22, 0.6);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  color: #ffffff;
-}
-
-.welcome-avatar-btn:hover .welcome-avatar-overlay {
-  opacity: 1;
-}
-
-/* Shockwave Ripple Effect */
-.welcome-avatar-ripple {
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  border: 2px solid rgba(167, 139, 250, 0.5);
-  animation: avatarRipple 2.4s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateZ(40px);
+  transition: opacity 0.3s ease, background 0.3s ease;
   pointer-events: none;
 }
 
-@keyframes avatarRipple {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.3);
-    opacity: 0;
-  }
+.welcome-3d-stage:hover .face-3d-status-overlay {
+  opacity: 1;
+}
+
+.face-3d-status-overlay.scanning {
+  opacity: 1;
+  background: rgba(9, 13, 22, 0.7);
+}
+
+.face-3d-status-overlay.unlocked {
+  opacity: 1;
+  background: rgba(16, 185, 129, 0.35);
+}
+
+.icon-idle {
+  color: #38bdf8;
+  filter: drop-shadow(0 0 10px #38bdf8);
+}
+
+.icon-scanning {
+  color: #38bdf8;
+  filter: drop-shadow(0 0 12px #38bdf8);
+  animation: pulseScan 0.5s infinite alternate;
+}
+
+.icon-success {
+  color: #10b981;
+  filter: drop-shadow(0 0 16px #10b981);
+  animation: popSuccess 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseScan {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes popSuccess {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* Profile Text */
@@ -283,6 +558,26 @@
   transform: translateY(0);
 }
 
+.welcome-enter-btn.scanning {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.5);
+  cursor: wait;
+}
+
+.welcome-enter-btn.unlocked {
+  background: linear-gradient(135deg, #059669, #10b981);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6);
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Subtle Hint Note */
 .welcome-hint {
   margin: 1.25rem 0 0;
@@ -298,9 +593,9 @@
     border-radius: 24px;
   }
 
-  .welcome-avatar-ring {
-    width: 120px;
-    height: 120px;
+  .face-3d-ring {
+    width: 130px;
+    height: 130px;
   }
 
   .welcome-name {
